@@ -2,9 +2,11 @@
 <?php
 require_once './utils/connect_db.php';
 
-$sql = "SELECT lastName, firstName
-from clients
-WHERE card > 0";
+$sql = 'SELECT clients.cardNumber, cards.cardNumber, cards.cardTypesId, cardtypes.type, clients.firstName, clients.lastName
+FROM clients
+INNER JOIN cards ON cards.cardNumber = clients.cardNumber
+INNER JOIN cardtypes ON cardtypes.id = cards.cardTypesId
+WHERE cardtypes.type LIKE "FIdélité"';
 
 try {
     $stmt = $pdo->query($sql);
